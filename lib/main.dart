@@ -1,10 +1,9 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:path_morph/path_morph.dart';
 import 'package:path_drawing/path_drawing.dart';
-
-import 'digitClipper.dart';
 
 void main() => runApp(MyApp());
 
@@ -74,34 +73,38 @@ class _MyApp extends State<MyApp> with SingleTickerProviderStateMixin {
             child: Column(
               children: <Widget>[
                 Center(
-                  child: Container(
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 15.0,
-                              color: Color(0xFF151515),
-                              offset: Offset(8.0, 8.0),
-                            ),
-                            BoxShadow(
-                              blurRadius: 12.0,
-                              color: Color(0xFF292929),
-                              offset: Offset(-8.0, -8.0),
-                            ),
-                          ],
-                          border:
-                              Border.all(color: Color(0xFF212121), width: 2),
-                          color: Color(0xFF212121),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.0))),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 40.0, vertical: 16.0),
-                        child: Text(
-                          "Path morphing with Flutter",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20.0),
-                        ),
-                      )),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 0.0, vertical: 16.0),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 15.0,
+                                color: Color(0xFF151515),
+                                offset: Offset(8.0, 8.0),
+                              ),
+                              BoxShadow(
+                                blurRadius: 12.0,
+                                color: Color(0xFF292929),
+                                offset: Offset(-8.0, -8.0),
+                              ),
+                            ],
+                            border:
+                                Border.all(color: Color(0xFF212121), width: 2),
+                            color: Color(0xFF212121),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0))),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 40.0, vertical: 16.0),
+                          child: Text(
+                            "Path morphing with Flutter",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20.0),
+                          ),
+                        )),
+                  ),
                 ),
                 Spacer(),
                 Center(
@@ -115,50 +118,43 @@ class _MyApp extends State<MyApp> with SingleTickerProviderStateMixin {
                         controller.reverse();
                       }
                       if (controller.status == AnimationStatus.dismissed) {
-                         .forward();
+                        controller.forward();
                       }
                     },
                     child: Text("Change shape"),
                   ),
                 )),
                 Spacer(),
-                Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 15.0,
-                            color: Color(0xFF151515),
-                            offset: Offset(8.0, 8.0),
-                          ),
-                          BoxShadow(
-                            blurRadius: 12.0,
-                            color: Color(0xFF292929),
-                            offset: Offset(-8.0, -8.0),
-                          ),
-                        ],
-                        border: Border.all(color: Color(0xFF212121), width: 2),
-                        color: Color(0xFF212121),
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Container(
-                          height: HEIGHT,
-                          width: WIDTH,
-                          child: ClipRect(
-                              clipper:
-                                  DigitBoxClipper(new ViewBox(WIDTH, HEIGHT)),
-                              child: Stack(children: <Widget>[
-                                ClipPath(
-                                  clipper: DigitClipper(
-                                    PathMorph.generatePath(data),
-                                  ),
-                                  child: CustomPaint(
-                                      size: Size.infinite,
-                                      painter: MyPainter(
-                                          PathMorph.generatePath(data))),
-                                )
-                              ]))),
+                Container(
+                  child: Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 15.0,
+                              color: Color(0xFF151515),
+                              offset: Offset(8.0, 8.0),
+                            ),
+                            BoxShadow(
+                              blurRadius: 12.0,
+                              color: Color(0xFF292929),
+                              offset: Offset(-8.0, -8.0),
+                            ),
+                          ],
+                          border: Border.all(color: Color(0xFF212121), width: 2),
+                          color: Color(0xFF212121),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: FittedBox(
+                          child: SizedBox(
+                              height: HEIGHT,
+                              width: WIDTH,
+                              child: CustomPaint(
+                                  painter: MyPainter(
+                                      PathMorph.generatePath(data)))),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -179,7 +175,6 @@ class MyPainter extends CustomPainter {
   MyPainter(this.path) {
     myPaint = Paint();
     myPaint.color = Color(0xFFC4C4C4);
-    //myPaint.style = PaintingStyle.values;
     myPaint.strokeWidth = 3.0;
   }
 
