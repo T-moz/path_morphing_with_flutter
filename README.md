@@ -1,16 +1,20 @@
-# morphapp2
+# Path morphing with flutter
 
-A new Flutter project.
+PATH MORPHING, FROM FIGMA TO FLUTTER APP
 
-## Getting Started
+## Context
 
-This project is a starting point for a Flutter application.
+I participated to the Flutter clock challenge with a coworker. The goal was to build a clock with Flutter for an iot device. Our biggest challenge was to create an animation between digits. We wanted each digit to transform their shapes.
 
-A few resources to get you started if this is your first Flutter project:
+<img src='assets/blob_clock_dark.gif' width='350'>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## The project
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The goals of this app is to create an animation between two digits.
+
+This type of shape animation is called path morphing.
+
+<img src='assets/path_morphing.gif' width='250'>
+
+
+[Related article](https://blog.bam.tech/developer-news/path-morphing-from-figma-to-flutter-app)
