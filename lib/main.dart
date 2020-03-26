@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -8,9 +7,26 @@ import 'package:path_drawing/path_drawing.dart';
 void main() => runApp(MyApp());
 
 const SCALE_RATIO = 0.8;
+
+// Sizes and Paddings
+const SMALL_SPACE = 8.0;
+const BORDER_WIDTH = 2.0;
+const RADIUS_CIRCULAR = 10.0;
+const BLUR_RADIUS_SMALL = 12.0;
+const BLUR_RADIUS_REGULAR = 15.0;
+const FONT_SIZE = 20.0;
+
+// Colors theme
+const WHITE_EGG = Color(0xFFC4C4C4);
+const DARK = Color(0xFF212121);
+const DARK_LIGHTER = Color(0xFF292929);
+const DARK_DARKER = Color(0xFF151515);
+
+// Widget sizes
 const WIDTH = 85.0;
 const HEIGHT = 140.0;
 
+// PATHS
 const ONE_PATH =
     'M32.7324 0.681641H34.8477C41.8984 2.24023 45.4238 5.76563 45.4238 11.2578V156.318C44.0879 163.666 40.3027 167.34 34.0684 167.34H33.2891C25.9414 165.781 22.2676 162.293 22.2676 156.875V28.1797C17.2949 29.8125 13.4727 30.6289 10.8008 30.6289C5.53125 30.6289 2.04297 27.1035 0.335938 20.0527V17.4922C0.335938 11.5547 6.83008 7.25 19.8184 4.57812L32.7324 0.681641Z';
 const TWO_PATH =
@@ -68,40 +84,42 @@ class _MyApp extends State<MyApp> with SingleTickerProviderStateMixin {
       theme: ThemeData(brightness: Brightness.dark),
       home: Scaffold(
         body: Container(
-          color: Color(0xFF212121),
+          color: DARK,
           child: SafeArea(
             child: Column(
               children: <Widget>[
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 0.0, vertical: 16.0),
+                        horizontal: 0.0, vertical: 2 * SMALL_SPACE),
                     child: Container(
                         decoration: BoxDecoration(
                             boxShadow: [
                               BoxShadow(
-                                blurRadius: 15.0,
-                                color: Color(0xFF151515),
-                                offset: Offset(8.0, 8.0),
+                                blurRadius: BLUR_RADIUS_REGULAR,
+                                color:DARK_DARKER,
+                                offset: Offset(SMALL_SPACE, SMALL_SPACE),
                               ),
                               BoxShadow(
-                                blurRadius: 12.0,
-                                color: Color(0xFF292929),
-                                offset: Offset(-8.0, -8.0),
+                                blurRadius: BLUR_RADIUS_SMALL,
+                                color: DARK_LIGHTER,
+                                offset: Offset(-SMALL_SPACE, -SMALL_SPACE),
                               ),
                             ],
-                            border:
-                                Border.all(color: Color(0xFF212121), width: 2),
-                            color: Color(0xFF212121),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0))),
+                            border: Border.all(
+                                color: DARK, width: BORDER_WIDTH),
+                            color: DARK,
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(RADIUS_CIRCULAR))),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 40.0, vertical: 16.0),
+                              horizontal: 5 * SMALL_SPACE,
+                              vertical: 2 * SMALL_SPACE),
                           child: Text(
                             "Path morphing with Flutter",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20.0),
+                                fontWeight: FontWeight.bold,
+                                fontSize: FONT_SIZE),
                           ),
                         )),
                   ),
@@ -109,10 +127,10 @@ class _MyApp extends State<MyApp> with SingleTickerProviderStateMixin {
                 Spacer(),
                 Center(
                     child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(SMALL_SPACE),
                   child: RaisedButton(
-                    color: Color(0xFFFFFFFF),
-                    textColor: Color(0xFF212121),
+                    color: Colors.white,
+                    textColor: DARK,
                     onPressed: () {
                       if (controller.status == AnimationStatus.completed) {
                         controller.reverse();
@@ -131,28 +149,30 @@ class _MyApp extends State<MyApp> with SingleTickerProviderStateMixin {
                       decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
-                              blurRadius: 15.0,
-                              color: Color(0xFF151515),
-                              offset: Offset(8.0, 8.0),
+                              blurRadius: BLUR_RADIUS_REGULAR,
+                              color: DARK_DARKER,
+                              offset: Offset(SMALL_SPACE, SMALL_SPACE),
                             ),
                             BoxShadow(
-                              blurRadius: 12.0,
-                              color: Color(0xFF292929),
-                              offset: Offset(-8.0, -8.0),
+                              blurRadius: BLUR_RADIUS_SMALL,
+                              color: DARK_LIGHTER,
+                              offset: Offset(-SMALL_SPACE, -SMALL_SPACE),
                             ),
                           ],
-                          border: Border.all(color: Color(0xFF212121), width: 2),
-                          color: Color(0xFF212121),
-                          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                          border: Border.all(
+                              color: DARK, width: BORDER_WIDTH),
+                          color: DARK,
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(RADIUS_CIRCULAR))),
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(2 * SMALL_SPACE),
                         child: FittedBox(
                           child: SizedBox(
                               height: HEIGHT,
                               width: WIDTH,
                               child: CustomPaint(
-                                  painter: MyPainter(
-                                      PathMorph.generatePath(data)))),
+                                  painter:
+                                      MyPainter(PathMorph.generatePath(data)))),
                         ),
                       ),
                     ),
@@ -174,8 +194,8 @@ class MyPainter extends CustomPainter {
 
   MyPainter(this.path) {
     myPaint = Paint();
-    myPaint.color = Color(0xFFC4C4C4);
-    myPaint.strokeWidth = 3.0;
+    myPaint.color = WHITE_EGG;
+    myPaint.strokeWidth = BORDER_WIDTH;
   }
 
   @override
